@@ -22,34 +22,27 @@ See [changelog](./CHANGELOG.md)
 
 ```js
 import React, { Component } from 'react'
-import GooglePlacesSuggest from 'react-google-map'
+import GoogleMap from 'react-google-map'
 
 export default class MyComponent extends Component {
   state = {
-    search: '',
-    selectedCoordinate: null,
+    coordinates: [],
+    zoom: 8,
   }
 
-  handleSearchChange = (e) => {
-    this.setState({ search: e.target.value })
-  }
-
-  handleSelectSuggest = (suggestName, coordinate) => {
-    this.setState({ search: suggestName, selectedCoordinate: coordinate })
-  }
+  handleMapChange(coordinates, zoom) {
+      this.setState({ coordinates, zoom })
+    }
 
   render() {
-    const { search } = this.state
+    const { coordinates, zoom } = this.state
 
     return (
-      <GooglePlacesSuggest onSelectSuggest={ this.handleSelectSuggest } search={ search }>
-        <input
-          type="text"
-          value={ search }
-          placeholder="Search a location"
-          onChange={ this.handleSearchChange }
-        />
-      </GooglePlacesSuggest>
+      <GoogleMap
+        coordinates={ coordinates }
+        zoom={ zoom }
+        onChange={ (coordinates, zoom) => this.handleMapChange(coordinates, zoom) }
+      />
     )
   }
 }
