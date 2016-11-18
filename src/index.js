@@ -3,14 +3,7 @@ import React, {Component, PropTypes} from "react"
 import iconMarker from "./iconMarker.svg"
 import iconTrash from "./iconTrash.svg"
 
-import styles from "./index.css"
-
-const MAP_TYPES = [
-  "HYBRID": google.maps.MapTypeId.HYBRID,
-  "ROADMAP": google.maps.MapTypeId.ROADMAP,
-  "SATELLITE": google.maps.MapTypeId.SATELLITE,
-  "TERRAIN": google.maps.MapTypeId.TERRAIN,
-]
+import "./index.css"
 
 class GoogleMap extends Component {
   constructor() {
@@ -22,50 +15,19 @@ class GoogleMap extends Component {
   }
 
   componentDidMount() {
-    const {
-      googleMaps, backgroundColor, centerLat, centerLng, clickableIcons, disableDefaultUI,
-      disableDoubleClickZoom, draggable, draggableCursor, draggingCursor,
-      fullscreenControl, heading, keyboardShortcuts, mapTypeControl,
-      mapTypeControlOptions, mapTypeId, maxZoom, nimZoom, noClear, panControl,
-      panControlOptions, rotateControl, rotateControlOptions, scaleControl,
-      scaleControlOptions, scrollwheel, signInControl, streetView, streetViewControl,
-      streetViewControlOptions, styles, tilt, zoom, zoomControl, zoomControlOptions,
-    } = this.props
+    const {googleMaps, centerLat, centerLng, mapType, ...props} = this.props
+
+    const mapTypes = [
+      "HYBRID": googleMaps.MapTypeId.HYBRID,
+      "ROADMAP": googleMaps.MapTypeId.ROADMAP,
+      "SATELLITE": googleMaps.MapTypeId.SATELLITE,
+      "TERRAIN": googleMaps.MapTypeId.TERRAIN,
+    ]
 
     const map = new googleMaps.Map(this.ref_map, {
-      backgroundColor,
       center: new googleMaps.LatLng(centerLat, centerLng),
-      clickableIcons,
-      disableDefaultUI,
-      disableDoubleClickZoom,
-      draggable,
-      draggableCursor,
-      draggingCursor,
-      fullscreenControl,
-      heading,
-      keyboardShortcuts,
-      mapTypeControl,
-      mapTypeControlOptions,
-      mapTypeId: MAP_TYPES[mapTypeId],
-      maxZoom,
-      nimZoom,
-      noClear,
-      panControl,
-      panControlOptions,
-      rotateControl,
-      rotateControlOptions,
-      scaleControl,
-      scaleControlOptions,
-      scrollwheel,
-      signInControl,
-      streetView,
-      streetViewControl,
-      streetViewControlOptions,
-      styles,
-      tilt,
-      zoom,
-      zoomControl,
-      zoomControlOptions,
+      mapTypeId: mapTypes[mapType],
+      ...props,
     })
 
     this.setState({map}, () => this.initMarkers())
@@ -193,7 +155,7 @@ class GoogleMap extends Component {
       this.fitBounds()
     }
     return (
-      <div ref={ref => this.ref_map = ref} className={styles.googleMap} />
+      <div ref={ref => this.ref_map = ref} className="reactGoogleMap" />
     )
   }
 }
@@ -213,40 +175,9 @@ GoogleMap.propTypes = {
   removeMarkerOnClick: PropTypes.bool,
 
   // google maps props
-  backgroundColor: PropTypes.string,
-  clickableIcons: PropTypes.bool,
   centerLat: PropTypes.number,
   centerLng: PropTypes.number,
-  disableDefaultUI: PropTypes.bool,
-  disableDoubleClickZoom: PropTypes.bool,
-  draggable: PropTypes.bool,
-  draggableCursor: PropTypes.string,
-  draggingCursor: PropTypes.string,
-  fullscreenControl: PropTypes.bool,
-  heading: PropTypes.number,
-  keyboardShortcuts: PropTypes.bool,
-  mapTypeControl: PropTypes.bool,
-  mapTypeControlOptions: PropTypes.bool,
-  mapTypeId: PropTypes.oneOf(["HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]),
-  maxZoom: PropTypes.number,
-  nimZoom: PropTypes.number,
-  noClear: PropTypes.bool,
-  panControl: PropTypes.bool,
-  panControlOptions: PropTypes.object,
-  rotateControl: PropTypes.bool,
-  rotateControlOptions: PropTypes.object,
-  scaleControl: PropTypes.bool,
-  scaleControlOptions: PropTypes.object,
-  scrollwheel: PropTypes.bool,
-  signInControl: PropTypes.bool,
-  streetView: PropTypes.object,
-  streetViewControl: PropTypes.bool,
-  streetViewControlOptions: PropTypes.object,
-  styles: PropTypes.array,
-  tilt: PropTypes.number,
-  zoom: PropTypes.number,
-  zoomControl: PropTypes.bool,
-  zoomControlOptions: PropTypes.object,
+  mapType: PropTypes.oneOf(["HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]),
 }
 
 GoogleMap.defaultProps = {
@@ -255,6 +186,11 @@ GoogleMap.defaultProps = {
   coordinates: [],
   onChange: null,
   removeMarkerOnClick: false,
+
+  // google maps props
+  centerLat: 43.604363,
+  centerLng: 1.443363,
+  mapType: "ROADMAP",
 }
 
 export default GoogleMap
