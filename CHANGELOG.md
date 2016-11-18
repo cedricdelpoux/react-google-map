@@ -1,4 +1,7 @@
-# 1.1.0 - 2016-11-18
+# 2.0.1 - 2016-11-18
+* Update : documentation
+
+# 2.0.0 - 2016-11-18
 * Update : package.json
 * Update : .babelrc
 * Update : .editorconfig

@@ -22,12 +22,17 @@ See [changelog](./CHANGELOG.md)
 
 ```js
 import React, { Component } from 'react'
-import placesLoader from "react-google-maps-loader"
+import GoogleMapLoader from "react-google-maps-loader"
 import GoogleMap from 'react-google-map'
 
 import iconMarker from "./iconMarker.svg"
 
-const Map = placesLoader(GoogleMap)
+const MY_API_KEY = "AIzaSyDwsdjfskhdbfjsdjbfksiTgnoriOAoUOgsUqOs10J0" // fake
+
+const Map =  GoogleMapLoader(GoogleMap, {
+  libraries: ["places"],
+  key: MY_API_KEY,
+})
 
 export default class MyComponent extends Component {
   state = {

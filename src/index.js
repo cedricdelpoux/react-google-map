@@ -6,10 +6,10 @@ import iconTrash from "./iconTrash.svg"
 import styles from "./index.css"
 
 const MAP_TYPES = [
-  HYBRID: google.maps.MapTypeId.HYBRID,
-  ROADMAP: google.maps.MapTypeId.ROADMAP,
-  SATELLITE: google.maps.MapTypeId.SATELLITE,
-  TERRAIN: google.maps.MapTypeId.TERRAIN,
+  "HYBRID": google.maps.MapTypeId.HYBRID,
+  "ROADMAP": google.maps.MapTypeId.ROADMAP,
+  "SATELLITE": google.maps.MapTypeId.SATELLITE,
+  "TERRAIN": google.maps.MapTypeId.TERRAIN,
 ]
 
 class GoogleMap extends Component {
