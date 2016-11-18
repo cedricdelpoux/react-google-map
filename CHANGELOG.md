@@ -1,5 +1,9 @@
+# 2.0.6 - 2016-11-18
+* Remove : webpack css-loader plugin
+* Remove : webpack style-loader plugin
+
 # 2.0.5 - 2016-11-18
-* Add : es6 spread operator 
+* Add : es6 spread operator
 
 # 2.0.4 - 2016-11-18
 * Update : .babelrc config

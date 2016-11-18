@@ -3,8 +3,6 @@ import React, {Component, PropTypes} from "react"
 import iconMarker from "./iconMarker.svg"
 import iconTrash from "./iconTrash.svg"
 
-import "./index.css"
-
 class GoogleMap extends Component {
   constructor() {
     super()
@@ -155,7 +153,7 @@ class GoogleMap extends Component {
       this.fitBounds()
     }
     return (
-      <div ref={ref => this.ref_map = ref} className="reactGoogleMap" />
+      <div ref={ref => this.ref_map = ref} style={{position: "relative", paddingBottom: "50%"}} />
     )
   }
 }

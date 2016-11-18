@@ -1,6 +1,5 @@
 var webpack = require("webpack")
 var path = require("path")
-var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 var sources = [
   path.resolve(__dirname, "src"),
@@ -41,11 +40,6 @@ module.exports = {
         test: /\.svg$/,
         loader: "file?name=lib/[name].[ext]"
       },
-      {
-        test: /\.css$/,
-        include: sources,
-        loader: ExtractTextPlugin.extract("style", "css")
-      },
     ],
   },
  externals: {
@@ -66,6 +60,5 @@ module.exports = {
         warnings: false,
       },
     }),
-    new ExtractTextPlugin("./lib/index.css"),
   ]
 }
