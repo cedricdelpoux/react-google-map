@@ -1,8 +1,5 @@
 import React, {Component, PropTypes} from "react"
 
-import iconMarker from "./iconMarker.svg"
-import iconTrash from "./iconTrash.svg"
-
 const inlineStyles = {
   position: "relative",
   overflow: "hidden",
@@ -93,7 +90,7 @@ class GoogleMap extends Component {
 
   addMarker(markerId, coordinate) {
     const {map} = this.state
-    const {googleMaps, removeMarkerOnClick} = this.props
+    const {googleMaps} = this.props
 
     const marker = new googleMaps.Marker({
       animation: googleMaps.Animation.DROP,
@@ -101,22 +98,8 @@ class GoogleMap extends Component {
       position: new googleMaps.LatLng(coordinate.latitude, coordinate.longitude),
       title: coordinate.title,
       description: coordinate.description,
-      icon: coordinate.icon ? coordinate.icon : iconMarker,
+      ...coordinate.icon ? {icon: coordinate.icon} : {},
     })
-
-    if (removeMarkerOnClick) {
-      googleMaps.event.addListener(marker, "mouseover", () => {
-        marker.setIcon(iconTrash)
-      })
-
-      googleMaps.event.addListener(marker, "mouseout", () => {
-        marker.setIcon(iconMarker)
-      })
-
-      googleMaps.event.addListener(marker, "click", () => {
-        this.removeMarker(markerId)
-      })
-    }
 
     return marker
   }
@@ -177,7 +160,6 @@ GoogleMap.propTypes = {
   })).isRequired,
   googleMaps: PropTypes.object.isRequired,
   onChange: PropTypes.func,
-  removeMarkerOnClick: PropTypes.bool,
 
   // google maps props
   centerLat: PropTypes.number,
@@ -190,7 +172,6 @@ GoogleMap.defaultProps = {
   boundsOffset: 0.002,
   coordinates: [],
   onChange: null,
-  removeMarkerOnClick: false,
 
   // google maps props
   centerLat: 43.604363,

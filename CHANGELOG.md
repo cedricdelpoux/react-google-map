@@ -1,3 +1,6 @@
+# 2.0.8 - 2016-11-18
+* Remove : custom svg icons
+
 # 2.0.7 - 2016-11-18
 * Update : styles
 

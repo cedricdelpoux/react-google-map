@@ -1,6 +1,6 @@
 {
   "name": "react-google-map",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "React component to render a map with markers from Google Maps API",
   "repository": {
     "type": "git",
@@ -38,7 +38,6 @@
     "eslint": "~3.5.0",
     "eslint-loader": "~1.5.0",
     "eslint-plugin-react": "~6.2.0",
-    "file-loader": "~0.9.0",
     "node-libs-browser": "~0.5.2",
     "webpack": "~1.13.1"
   },

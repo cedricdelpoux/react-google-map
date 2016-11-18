@@ -36,10 +36,6 @@ module.exports = {
           presets: ["latest"]
         },
       },
-      {
-        test: /\.svg$/,
-        loader: "file?name=lib/[name].[ext]"
-      },
     ],
   },
  externals: {
