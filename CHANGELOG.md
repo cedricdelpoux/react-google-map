@@ -1,5 +1,8 @@
+# 2.0.5 - 2016-11-18
+* Add : es6 spread operator 
+
 # 2.0.4 - 2016-11-18
-* Update : .eslintrc config
+* Update : .babelrc config
 
 # 2.0.3 - 2016-11-18
 * Update : initialize google map with undefined props
