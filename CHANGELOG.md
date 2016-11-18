@@ -1,10 +1,16 @@
-# Changelog
+# 1.1.0 - 2016-11-18
+* Update : package.json
+* Update : .babelrc
+* Update : .editorconfig
+* Update : .eslinted
+* Update : README
+* Update : webpack.config.js
+* Update : src/index.js - Add all google maps options
 
-## 1.0.1 - 2015-09-11
+# 1.0.1 - 2015-09-11
 
-* Add : libraryTarget into Webpack config 
+* Add : libraryTarget into Webpack config
 
-## 1.0.0 - 2015-09-09
+# 1.0.0 - 2015-09-09
 
 * Initial release
-

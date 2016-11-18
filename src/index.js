@@ -1,57 +1,74 @@
-import './index.css'
-import iconMarker from './iconMarker.svg'
-import iconTrash from './iconTrash.svg'
+import React, {Component, PropTypes} from "react"
 
-import React, { Component, PropTypes } from 'react'
-import googleMapsLoader from 'react-google-maps-loader'
+import iconMarker from "./iconMarker.svg"
+import iconTrash from "./iconTrash.svg"
 
-const { arrayOf, func, object, number, shape, string } = PropTypes
+import styles from "./index.css"
 
-@googleMapsLoader({ libraries: 'places' })
-export default class GoogleMap extends Component {
-  static propTypes = {
-    coordinates: arrayOf(shape({
-      description: string,
-      latitude: number.isRequired,
-      longitude: number.isRequired,
-      title: string.isRequired,
-    })),
-    defaultLat: number,
-    defaultLng: number,
-    googleMaps: object,
-    onChange: func,
-    zoom: number.isRequired,
-  }
+const MAP_TYPES = [
+  HYBRID: google.maps.MapTypeId.HYBRID,
+  ROADMAP: google.maps.MapTypeId.ROADMAP,
+  SATELLITE: google.maps.MapTypeId.SATELLITE,
+  TERRAIN: google.maps.MapTypeId.TERRAIN,
+]
 
-  static defaultProps = {
-    boundsOffset: 0.002,
-    coordinates: [],
-    defaultLat: 43.604305,
-    defaultLng: 1.443999,
-    googleMaps: null,
-    onChange: () => {},
-    zoom: 8,
-  }
-
-  state = {
-    map: null,
-    markers: new Map(),
+class GoogleMap extends Component {
+  constructor() {
+    super()
+    this.state = {
+      map: null,
+      markers: new Map(),
+    }
   }
 
   componentDidMount() {
-    const { defaultLat, defaultLng, googleMaps, zoom } = this.props
-    const map = new googleMaps.Map(React.findDOMNode(this.refs.map), {
+    const {
+      googleMaps, backgroundColor, centerLat, centerLng, clickableIcons, disableDefaultUI,
+      disableDoubleClickZoom, draggable, draggableCursor, draggingCursor,
+      fullscreenControl, heading, keyboardShortcuts, mapTypeControl,
+      mapTypeControlOptions, mapTypeId, maxZoom, nimZoom, noClear, panControl,
+      panControlOptions, rotateControl, rotateControlOptions, scaleControl,
+      scaleControlOptions, scrollwheel, signInControl, streetView, streetViewControl,
+      streetViewControlOptions, styles, tilt, zoom, zoomControl, zoomControlOptions,
+    } = this.props
+
+    const map = new googleMaps.Map(this.ref_map, {
+      backgroundColor,
+      center: new googleMaps.LatLng(centerLat, centerLng),
+      clickableIcons,
+      disableDefaultUI,
+      disableDoubleClickZoom,
+      draggable,
+      draggableCursor,
+      draggingCursor,
+      fullscreenControl,
+      heading,
+      keyboardShortcuts,
+      mapTypeControl,
+      mapTypeControlOptions,
+      mapTypeId: MAP_TYPES[mapTypeId],
+      maxZoom,
+      nimZoom,
+      noClear,
+      panControl,
+      panControlOptions,
+      rotateControl,
+      rotateControlOptions,
+      scaleControl,
+      scaleControlOptions,
+      scrollwheel,
+      signInControl,
+      streetView,
+      streetViewControl,
+      streetViewControlOptions,
+      styles,
+      tilt,
       zoom,
-      center: new googleMaps.LatLng(defaultLat, defaultLng),
-      panControl: false,
-      zoomControl: true,
-      mapTypeControl: false,
-      scaleControl: false,
-      streetViewControl: false,
-      overviewMapControl: false,
+      zoomControl,
+      zoomControlOptions,
     })
 
-    this.setState({ map }, () => this.initMarkers())
+    this.setState({map}, () => this.initMarkers())
   }
 
   componentWillReceiveProps(nextProps) {
@@ -66,17 +83,20 @@ export default class GoogleMap extends Component {
   }
 
   initMarkers() {
-    this.addNewMarkers(this.props.coordinates)
+    const {autoFitBounds, coordinates} = this.props
+
+    this.addNewMarkers(coordinates)
+    if (autoFitBounds) {
+      this.fitBounds()
+    }
   }
 
   updateMarkers(coordinates) {
     this.addNewMarkers(coordinates)
-
-    this.props.onChange(this.getNewCoordinates(), this.state.map.getZoom())
   }
 
   addNewMarkers(coordinates) {
-    const { markers } = this.state
+    const {markers} = this.state
 
     coordinates.forEach((coordinate, key) => {
       const markerId = this.getMarkerId(coordinate)
@@ -85,11 +105,11 @@ export default class GoogleMap extends Component {
       }
     })
 
-    this.setState({ markers })
+    this.setState({markers})
   }
 
   getMarkerId(coordinate) {
-    return coordinate.latitude + '_' + coordinate.longitude
+    return coordinate.latitude + "_" + coordinate.longitude
   }
 
   getNewCoordinates() {
@@ -105,8 +125,8 @@ export default class GoogleMap extends Component {
   }
 
   addMarker(markerId, coordinate) {
-    const { googleMaps } = this.props
-    const { map } = this.state
+    const {map} = this.state
+    const {googleMaps, removeMarkerOnClick} = this.props
 
     const marker = new googleMaps.Marker({
       animation: googleMaps.Animation.DROP,
@@ -114,39 +134,44 @@ export default class GoogleMap extends Component {
       position: new googleMaps.LatLng(coordinate.latitude, coordinate.longitude),
       title: coordinate.title,
       description: coordinate.description,
-      icon: iconMarker,
+      icon: coordinate.icon ? coordinate.icon : iconMarker,
     })
 
-    googleMaps.event.addListener(marker, 'mouseover', () => {
-      marker.setIcon(iconTrash)
-    })
+    if (removeMarkerOnClick) {
+      googleMaps.event.addListener(marker, "mouseover", () => {
+        marker.setIcon(iconTrash)
+      })
 
-    googleMaps.event.addListener(marker, 'mouseout', () => {
-      marker.setIcon(iconMarker)
-    })
+      googleMaps.event.addListener(marker, "mouseout", () => {
+        marker.setIcon(iconMarker)
+      })
 
-    googleMaps.event.addListener(marker, 'click', () => {
-      this.removeMarker(markerId)
-    })
+      googleMaps.event.addListener(marker, "click", () => {
+        this.removeMarker(markerId)
+      })
+    }
 
     return marker
   }
 
   removeMarker(markerId) {
-
-    const { onChange } = this.props
-    const { map, markers } = this.state
+    const {map, markers} = this.state
+    const {onChange} = this.props
     const marker = markers.get(markerId)
 
     marker.setMap(null)
     markers.delete(markerId)
 
-    onChange(this.getNewCoordinates(), map.getZoom())
+    if (onChange) {
+      onChange(this.getNewCoordinates(), map.getZoom())
+    }
+
+    this.setState({markers})
   }
 
   fitBounds() {
-    const { boundsOffset, googleMaps } = this.props
-    const { map, markers } = this.state
+    const {map, markers} = this.state
+    const {boundsOffset, googleMaps} = this.props
 
     if (!map || markers.size === 0) {
       return
@@ -158,15 +183,78 @@ export default class GoogleMap extends Component {
     bounds
       .extend(new googleMaps.LatLng(center.lat() + boundsOffset, center.lng() + boundsOffset))
       .extend(new googleMaps.LatLng(center.lat() - boundsOffset, center.lng() - boundsOffset))
-    map.setCenter(center)
 
+    map.setCenter(center)
     map.fitBounds(bounds)
   }
 
   render() {
-    this.fitBounds()
+    if (autoFitBounds) {
+      this.fitBounds()
+    }
     return (
-      <div ref="map" className="googleMap"></div>
+      <div ref={ref => this.ref_map = ref} className={styles.googleMap} />
     )
   }
 }
+
+GoogleMap.propTypes = {
+  autoFitBounds: PropTypes.bool,
+  boundsOffset: PropTypes.number,
+  coordinates: PropTypes.arrayOf(PropTypes.shape({
+    description: PropTypes.string,
+    icon: PropTypes.string,
+    latitude: PropTypes.number.isRequired,
+    longitude: PropTypes.number.isRequired,
+    title: PropTypes.string.isRequired,
+  })).isRequired,
+  googleMaps: PropTypes.object.isRequired,
+  onChange: PropTypes.func,
+  removeMarkerOnClick: PropTypes.bool,
+
+  // google maps props
+  backgroundColor: PropTypes.string,
+  clickableIcons: PropTypes.bool,
+  centerLat: PropTypes.number,
+  centerLng: PropTypes.number,
+  disableDefaultUI: PropTypes.bool,
+  disableDoubleClickZoom: PropTypes.bool,
+  draggable: PropTypes.bool,
+  draggableCursor: PropTypes.string,
+  draggingCursor: PropTypes.string,
+  fullscreenControl: PropTypes.bool,
+  heading: PropTypes.number,
+  keyboardShortcuts: PropTypes.bool,
+  mapTypeControl: PropTypes.bool,
+  mapTypeControlOptions: PropTypes.bool,
+  mapTypeId: PropTypes.oneOf(["HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]),
+  maxZoom: PropTypes.number,
+  nimZoom: PropTypes.number,
+  noClear: PropTypes.bool,
+  panControl: PropTypes.bool,
+  panControlOptions: PropTypes.object,
+  rotateControl: PropTypes.bool,
+  rotateControlOptions: PropTypes.object,
+  scaleControl: PropTypes.bool,
+  scaleControlOptions: PropTypes.object,
+  scrollwheel: PropTypes.bool,
+  signInControl: PropTypes.bool,
+  streetView: PropTypes.object,
+  streetViewControl: PropTypes.bool,
+  streetViewControlOptions: PropTypes.object,
+  styles: PropTypes.array,
+  tilt: PropTypes.number,
+  zoom: PropTypes.number.isRequired,
+  zoomControl: PropTypes.bool,
+  zoomControlOptions: PropTypes.object,
+}
+
+GoogleMap.defaultProps = {
+  autoFitBounds: false,
+  boundsOffset: 0.002,
+  coordinates: [],
+  onChange: null,
+  removeMarkerOnClick: false,
+}
+
+export default GoogleMap

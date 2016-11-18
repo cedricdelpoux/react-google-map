@@ -1,38 +1,59 @@
-var webpack = require('webpack')
-var path = require('path')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
+var webpack = require("webpack")
+var path = require("path")
+var ExtractTextPlugin = require("extract-text-webpack-plugin")
 
 var sources = [
-  path.resolve(__dirname, 'src'),
+  path.resolve(__dirname, "src"),
 ]
 
 module.exports = {
-  entry: './src/index.js',
+  entry: "./src/index.js",
   output: {
     path: __dirname,
-    filename: './lib/index.js',
-    library: 'react-google-map',
-    libraryTarget: 'umd',
+    filename: "./lib/index.js",
+    library: "react-google-map",
+    libraryTarget: "umd",
   },
   resolve: {
-    extensions: ['', '.js']
+    extensions: ["", ".js"]
   },
   module: {
     preLoaders: [
-      { test: /\.js?$/, include: sources, loader: 'eslint' },
+      {
+        test: /\.js?$/,
+        include: sources,
+        loader: "eslint",
+        query: {
+          presets: ["latest"]
+        },
+      },
     ],
     loaders: [
-      { test: /\.svg$/, loader: 'file?name=[name].[ext]' },
-      { test: /\.js$/, include: sources, loader: 'babel' },
-      { test: /\.css$/, include: sources, loader: ExtractTextPlugin.extract('style', 'css') },
+      {
+        test: /\.js$/,
+        include: sources,
+        loader: "babel",
+        query: {
+          presets: ["latest"]
+        },
+      },
+      {
+        test: /\.svg$/,
+        loader: "file?name=lib/[name].[ext]"
+      },
+      {
+        test: /\.css$/,
+        include: sources,
+        loader: ExtractTextPlugin.extract("style", "css")
+      },
     ],
   },
-  externals: {
+ externals: {
     react: {
-      root: 'React',
-      commonjs: 'react',
-      commonjs2: 'react',
-      amd: 'react',
+      root: "React",
+      commonjs: "react",
+      commonjs2: "react",
+      amd: "react",
     },
   },
   plugins: [
@@ -45,6 +66,6 @@ module.exports = {
         warnings: false,
       },
     }),
-    new ExtractTextPlugin('./lib/index.css'),
+    new ExtractTextPlugin("./lib/index.css"),
   ]
 }

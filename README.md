@@ -14,7 +14,7 @@ npm install --save react-google-map
 
 See [changelog](./CHANGELOG.md)
 
-## Demo 
+## Demo
 
 <http://cedricdelpoux.github.io/react-google-map/>
 
@@ -22,26 +22,37 @@ See [changelog](./CHANGELOG.md)
 
 ```js
 import React, { Component } from 'react'
+import placesLoader from "react-google-maps-loader"
 import GoogleMap from 'react-google-map'
+
+import iconMarker from "./iconMarker.svg"
+
+const Map = placesLoader(GoogleMap)
 
 export default class MyComponent extends Component {
   state = {
-    coordinates: [],
+    coordinates: [{
+      description: "Place du capitole",
+      icon: iconMarker,
+      latitude: 43.604363,
+      longitude: 1.443363,
+      title: "Toulouse"
+    }],
     zoom: 8,
   }
 
   handleMapChange(coordinates, zoom) {
-      this.setState({ coordinates, zoom })
-    }
+    this.setState({coordinates, zoom})
+  }
 
   render() {
     const { coordinates, zoom } = this.state
-
     return (
-      <GoogleMap
-        coordinates={ coordinates }
-        zoom={ zoom }
-        onChange={ (coordinates, zoom) => this.handleMapChange(coordinates, zoom) }
+      <Map
+        autoFitBounds
+        coordinates={coordinates}
+        onChange={(coordinates, zoom) => this.handleMapChange(coordinates, zoom)}
+        zoom={zoom}
       />
     )
   }
@@ -50,16 +61,16 @@ export default class MyComponent extends Component {
 
 ## Props
 
-  * `coordinates`: Array of objects with shape { description: String, latitude: Number, longitude: Number, title: String } - by default is []
-  * `defaultLat`: Number,
-  * `defaultLng`: Number,
-  * `googleMaps`: Object - injected by decorator,
+  * `coordinates`: Array of objects with shape { description: String, latitude: Number, longitude: Number, title: String, icon: String } - by default is []
+  * `centerLat`: Number,
+  * `centerLng`: Number,
+  * `googleMaps`: Object - injected by placesLoader,
   * `onChange`: Function with two parameters (New coordinates object, actual zoom),
-  * `zoom`: Number - isRequired,
+  * `zoom`: Number,
+  * `mapTypeId`: String - One of ["HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"],
 
-## Classes
-
-  * `.googleMap`
+You can also pass all Google Maps options :
+https://developers.google.com/maps/documentation/javascript/reference
 
 ## Development
 
