@@ -1,3 +1,6 @@
+# 2.0.2 - 2016-11-18
+* Fix : initialize autoFitBounds
+
 # 2.0.1 - 2016-11-18
 * Update : documentation
 

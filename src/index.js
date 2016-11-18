@@ -189,7 +189,7 @@ class GoogleMap extends Component {
   }
 
   render() {
-    if (autoFitBounds) {
+    if (this.props.autoFitBounds) {
       this.fitBounds()
     }
     return (
@@ -244,7 +244,7 @@ GoogleMap.propTypes = {
   streetViewControlOptions: PropTypes.object,
   styles: PropTypes.array,
   tilt: PropTypes.number,
-  zoom: PropTypes.number.isRequired,
+  zoom: PropTypes.number,
   zoomControl: PropTypes.bool,
   zoomControlOptions: PropTypes.object,
 }
