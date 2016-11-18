@@ -3,6 +3,13 @@ import React, {Component, PropTypes} from "react"
 import iconMarker from "./iconMarker.svg"
 import iconTrash from "./iconTrash.svg"
 
+const inlineStyles = {
+  position: "relative",
+  overflow: "hidden",
+  height: "100%",
+  width: "100%",
+}
+
 class GoogleMap extends Component {
   constructor() {
     super()
@@ -153,7 +160,7 @@ class GoogleMap extends Component {
       this.fitBounds()
     }
     return (
-      <div ref={ref => this.ref_map = ref} style={{position: "relative", paddingBottom: "50%"}} />
+      <div ref={ref => this.ref_map = ref} style={inlineStyles} />
     )
   }
 }
@@ -179,7 +186,7 @@ GoogleMap.propTypes = {
 }
 
 GoogleMap.defaultProps = {
-  autoFitBounds: false,
+  autoFitBounds: true,
   boundsOffset: 0.002,
   coordinates: [],
   onChange: null,

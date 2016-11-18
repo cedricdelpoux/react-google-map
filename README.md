@@ -21,47 +21,36 @@ See [changelog](./CHANGELOG.md)
 ## Usage
 
 ```js
-import React, { Component } from 'react'
-import GoogleMapLoader from "react-google-maps-loader"
-import GoogleMap from 'react-google-map'
+import React, {PropTypes} from "react"
 
-import iconMarker from "./iconMarker.svg"
+import GoogleMap from "react-google-map"
+import GoogleMapLoader from "react-google-maps-loader"
+
+import styles from "./index.css"
 
 const MY_API_KEY = "AIzaSyDwsdjfskhdbfjsdjbfksiTgnoriOAoUOgsUqOs10J0" // fake
 
-const Map =  GoogleMapLoader(GoogleMap, {
+const Map = ({googleMaps}) => (
+  <div style={{height: "300px"}}>
+    <GoogleMap googleMaps={googleMaps} coordinates={[
+      {
+        title: "Toulouse",
+        latitude: 43.604363,
+        longitude: 1.443363,
+      }
+    ]} />
+  </div>
+)
+
+Map.propTypes = {
+  googleMaps: PropTypes.object.isRequired,
+}
+
+export default GoogleMapLoader(Map, {
   libraries: ["places"],
   key: MY_API_KEY,
 })
 
-export default class MyComponent extends Component {
-  state = {
-    coordinates: [{
-      description: "Place du capitole",
-      icon: iconMarker,
-      latitude: 43.604363,
-      longitude: 1.443363,
-      title: "Toulouse"
-    }],
-    zoom: 8,
-  }
-
-  handleMapChange(coordinates, zoom) {
-    this.setState({coordinates, zoom})
-  }
-
-  render() {
-    const { coordinates, zoom } = this.state
-    return (
-      <Map
-        autoFitBounds
-        coordinates={coordinates}
-        onChange={(coordinates, zoom) => this.handleMapChange(coordinates, zoom)}
-        zoom={zoom}
-      />
-    )
-  }
-}
 ```
 
 ## Props
@@ -71,7 +60,6 @@ export default class MyComponent extends Component {
   * `centerLng`: Number,
   * `googleMaps`: Object - injected by placesLoader,
   * `onChange`: Function with two parameters (New coordinates object, actual zoom),
-  * `zoom`: Number,
   * `mapTypeId`: String - One of ["HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"],
 
 You can also pass all Google Maps options :

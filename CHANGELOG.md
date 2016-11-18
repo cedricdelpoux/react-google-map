@@ -1,3 +1,6 @@
+# 2.0.7 - 2016-11-18
+* Update : styles
+
 # 2.0.6 - 2016-11-18
 * Remove : webpack css-loader plugin
 * Remove : webpack style-loader plugin
