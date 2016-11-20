@@ -1,6 +1,6 @@
 {
   "name": "react-google-map",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "React component to render a Google Map with markers",
   "repository": {
     "type": "git",
@@ -24,9 +24,8 @@
   "files": [
     "lib"
   ],
-  "dependencies": {
-    "react": "~15.3.0",
-    "react-google-maps-loader": "^2.0.0"
+  "peerDependencies": {
+    "react": "~15.4.0"
   },
   "devDependencies": {
     "babel-core": "~6.14.0",

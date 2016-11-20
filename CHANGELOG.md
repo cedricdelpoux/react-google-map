@@ -1,3 +1,6 @@
+# 3.0.1 - 2016-11-20
+* Remove : useless `react-google-maps-loader` dependency in package.json
+
 # 3.0.0 - 2016-11-20
 * Add : `onLoaded` prop on `map`
 * Add : `onLoaded` prop on `marker`
