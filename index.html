@@ -2,7 +2,7 @@
 <html lang="en-us">
   <head>
     <meta charset="UTF-8">
-    <title>React-google-map by cedricdelpoux</title>
+    <title>React-google-map by xuopled</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" type="text/css" href="stylesheets/normalize.css" media="screen">
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,700' rel='stylesheet' type='text/css'>
@@ -13,129 +13,192 @@
     <section class="page-header">
       <h1 class="project-name">React-google-map</h1>
       <h2 class="project-tagline">React component to render a map with markers from Google Maps API</h2>
-      <a href="https://github.com/cedricdelpoux/react-google-map" class="btn">View on GitHub</a>
-      <a href="https://github.com/cedricdelpoux/react-google-map/zipball/master" class="btn">Download .zip</a>
-      <a href="https://github.com/cedricdelpoux/react-google-map/tarball/master" class="btn">Download .tar.gz</a>
+      <a href="https://github.com/xuopled/react-google-map" class="btn">View on GitHub</a>
+      <a href="https://github.com/xuopled/react-google-map/zipball/master" class="btn">Download .zip</a>
+      <a href="https://github.com/xuopled/react-google-map/tarball/master" class="btn">Download .tar.gz</a>
     </section>
-
     <section class="main-content">
       <h1>
-<a id="react-google-map--" class="anchor" href="#react-google-map--" aria-hidden="true"><span class="octicon octicon-link"></span></a>react-google-map <img src="https://img.shields.io/npm/v/react-google-map.svg" alt="npm"> <img src="https://img.shields.io/npm/l/react-google-map.svg" alt="license">
-</h1>
+        <a id="react-google-map--" class="anchor" href="#react-google-map--" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>react-google-map <img src="https://img.shields.io/npm/v/react-google-map.svg" alt="npm"> <img src="https://img.shields.io/npm/l/react-google-map.svg" alt="license">
+      </h1>
+      <p>React component to render a Google Map with markers.
+        You can use all official Google Maps API features.
+      </p>
+      <p><a href="https://developers.google.com/maps/documentation/javascript/reference">https://developers.google.com/maps/documentation/javascript/reference</a></p>
+      <h2>
+        <a id="install" class="anchor" href="#install" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Install
+      </h2>
+      <div class="highlight highlight-source-shell">
+        <pre>npm install --save react-google-map</pre>
+      </div>
+      <h2>
+        <a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Changelog
+      </h2>
+      <p>See <a href="./CHANGELOG.md">changelog</a></p>
+      <h2>
+        <a id="demo" class="anchor" href="#demo" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Demo
+      </h2>
+      <div id="demo-container"></div>
+      <h2>
+        <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage
+      </h2>
+      <div class="highlight highlight-source-css">
+        <pre>
+<span class="pl-e">.map</span> {
+  <span class="pl-c1"><span class="pl-c1">height</span></span>: <span class="pl-c1">300<span class="pl-k">px</span></span>;
+}
 
-<p>React component to render a map with markers from Google Maps API</p>
+<span class="pl-k">@media</span> <span class="pl-c1">screen</span> <span class="pl-k">and</span> (<span class="pl-c1">min-width</span>: <span class="pl-c1">1024<span class="pl-k">px</span></span>){
+    <span class="pl-e">.map</span> {
+        <span class="pl-c1"><span class="pl-c1">height</span></span>: <span class="pl-c1">500<span class="pl-k">px</span></span>;
+    }
+}</pre>
+      </div>
+      <div class="highlight highlight-source-js">
+        <pre><span class="pl-k">import</span> <span class="pl-smi">React</span>, {<span class="pl-smi">PropTypes</span>} <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react<span class="pl-pds">"</span></span>
 
-<h2>
-<a id="install" class="anchor" href="#install" aria-hidden="true"><span class="octicon octicon-link"></span></a>Install</h2>
+<span class="pl-k">import</span> <span class="pl-smi">GoogleMap</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-google-map<span class="pl-pds">"</span></span>
+<span class="pl-k">import</span> <span class="pl-smi">GoogleMapLoader</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>react-google-maps-loader<span class="pl-pds">"</span></span>
 
-<div class="highlight highlight-sh"><pre>npm install --save react-google-map</pre></div>
+<span class="pl-k">import</span> <span class="pl-smi">iconMarker</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./assets/iconMarker.svg<span class="pl-pds">"</span></span>
+<span class="pl-k">import</span> <span class="pl-smi">iconMarkerHover</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./assets/iconMarkerHover.svg<span class="pl-pds">"</span></span>
 
-<h2>
-<a id="changelog" class="anchor" href="#changelog" aria-hidden="true"><span class="octicon octicon-link"></span></a>Changelog</h2>
+<span class="pl-k">import</span> <span class="pl-smi">styles</span> <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">"</span>./index.css<span class="pl-pds">"</span></span>
 
-<p>See <a href="./CHANGELOG.md">changelog</a></p>
+<span class="pl-k">const</span> <span class="pl-c1">MY_API_KEY</span> <span class="pl-k">=</span> <span class="pl-s"><span class="pl-pds">"</span>AIzaSyDwsdjfskhdbfjsdjbfksiTgnoriOAoUOgsUqOs10J0<span class="pl-pds">"</span></span> <span class="pl-c">// fake</span>
 
-<h2>
-<a id="demo" class="anchor" href="#demo" aria-hidden="true"><span class="octicon octicon-link"></span></a>Demo</h2>
-<div id="demo-container"></div>
+<span class="pl-k">const</span> <span class="pl-c1">Map</span> <span class="pl-k">=</span> ({googleMaps}) <span class="pl-k">=&gt;</span> (
+  <span class="pl-c">// GoogleMap component has a 100% height style.</span>
+  <span class="pl-c">// You have to set the DOM parent height.</span>
+  <span class="pl-c">// So you can perfectly handle responsive with differents heights.</span>
+  <span class="pl-k">&lt;</span>div className<span class="pl-k">=</span>{<span class="pl-smi">styles</span>.<span class="pl-smi">map</span>}<span class="pl-k">&gt;</span>
+    <span class="pl-k">&lt;</span>GoogleMap
+      googleMaps<span class="pl-k">=</span>{googleMaps}
+      <span class="pl-c">// You can add and remove coordinates on the fly.</span>
+      <span class="pl-c">// The map will rerender new markers and remove the old ones.</span>
+      coordinates<span class="pl-k">=</span>{[
+        {
+          title<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Toulouse<span class="pl-pds">"</span></span>,
+          icon<span class="pl-k">:</span> iconMarker,
+          position<span class="pl-k">:</span> {
+            lat<span class="pl-k">:</span> <span class="pl-c1">43.604363</span>,
+            lng<span class="pl-k">:</span> <span class="pl-c1">1.443363</span>,
+          },
+          <span class="pl-en">onLoaded</span><span class="pl-k">:</span> (<span class="pl-smi">googleMaps</span>, <span class="pl-smi">map</span>, <span class="pl-smi">marker</span>) <span class="pl-k">=&gt;</span> {
+            <span class="pl-c">// Set Marker animation</span>
+            <span class="pl-smi">marker</span>.<span class="pl-en">setAnimation</span>(<span class="pl-smi">googleMaps</span>.<span class="pl-smi">Animation</span>.<span class="pl-c1">BOUNCE</span>)
 
-<h2>
-<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span class="octicon octicon-link"></span></a>Usage</h2>
+            <span class="pl-c">// Define Marker InfoWindow</span>
+            <span class="pl-k">const</span> <span class="pl-c1">infoWindow</span> <span class="pl-k">=</span> <span class="pl-k">new</span> <span class="pl-en">googleMaps.InfoWindow</span>({
+              content<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">`</span></span>
+<span class="pl-s">                &lt;div&gt;</span>
+<span class="pl-s">                  &lt;h3&gt;Toulouse&lt;h3&gt;</span>
+<span class="pl-s">                  &lt;div&gt;</span>
+<span class="pl-s">                    Toulouse is the capital city of the southwestern</span>
+<span class="pl-s">                    French department of Haute-Garonne,</span>
+<span class="pl-s">                    as well as of the Occitanie region.</span>
+<span class="pl-s">                  &lt;/div&gt;</span>
+<span class="pl-s">                &lt;/div&gt;</span>
+<span class="pl-s">              <span class="pl-pds">`</span></span>,
+            })
 
-<div class="highlight highlight-js"><pre><span class="pl-k">import</span> React, { Component } <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react<span class="pl-pds">'</span></span>
-<span class="pl-k">import</span> GooglePlacesSuggest <span class="pl-k">from</span> <span class="pl-s"><span class="pl-pds">'</span>react-google-map<span class="pl-pds">'</span></span>
+            <span class="pl-c">// Open InfoWindow when Marker will be clicked</span>
+            <span class="pl-smi">googleMaps</span>.<span class="pl-c1">event</span>.<span class="pl-en">addListener</span>(marker, <span class="pl-s"><span class="pl-pds">"</span>click<span class="pl-pds">"</span></span>, () <span class="pl-k">=&gt;</span> {
+              <span class="pl-smi">infoWindow</span>.<span class="pl-c1">open</span>(map, marker)
+            })
 
-<span class="pl-k">export</span> <span class="pl-k">default</span> <span class="pl-k">class</span> <span class="pl-en">MyComponent</span> <span class="pl-k">extends</span> <span class="pl-en">Component</span> {
-  state <span class="pl-k">=</span> {
-    search<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span><span class="pl-pds">'</span></span>,
-    selectedCoordinate<span class="pl-k">:</span> <span class="pl-c1">null</span>,
-  }
+            <span class="pl-c">// Change icon when Marker will be hovered</span>
+            <span class="pl-smi">googleMaps</span>.<span class="pl-c1">event</span>.<span class="pl-en">addListener</span>(marker, <span class="pl-s"><span class="pl-pds">"</span>mouseover<span class="pl-pds">"</span></span>, () <span class="pl-k">=&gt;</span> {
+              <span class="pl-smi">marker</span>.<span class="pl-en">setIcon</span>(iconMarkerHover)
+            })
 
-  <span class="pl-en">handleSearchChange</span> <span class="pl-k">=</span> (<span class="pl-smi">e</span>)<span class="pl-k"> =&gt;</span> {
-    <span class="pl-v">this</span>.setState({ search<span class="pl-k">:</span> e.<span class="pl-c1">target</span>.<span class="pl-c1">value</span> })
-  }
+            <span class="pl-smi">googleMaps</span>.<span class="pl-c1">event</span>.<span class="pl-en">addListener</span>(marker, <span class="pl-s"><span class="pl-pds">"</span>mouseout<span class="pl-pds">"</span></span>, () <span class="pl-k">=&gt;</span> {
+              <span class="pl-smi">marker</span>.<span class="pl-en">setIcon</span>(iconMarker)
+            })
 
-  <span class="pl-en">handleSelectSuggest</span> <span class="pl-k">=</span> (<span class="pl-smi">suggestName</span>, <span class="pl-smi">coordinate</span>)<span class="pl-k"> =&gt;</span> {
-    <span class="pl-v">this</span>.setState({ search<span class="pl-k">:</span> suggestName, selectedCoordinate<span class="pl-k">:</span> coordinate })
-  }
+            <span class="pl-c">// Open InfoWindow directly</span>
+            <span class="pl-smi">infoWindow</span>.<span class="pl-c1">open</span>(map, marker)
+          },
+        }
+      ]}
+      center<span class="pl-k">=</span>{{lat<span class="pl-k">:</span> <span class="pl-c1">43.604363</span>, lng<span class="pl-k">:</span> <span class="pl-c1">1.443363</span>}}
+      zoom<span class="pl-k">=</span>{<span class="pl-c1">8</span>}
+      onLoaded<span class="pl-k">=</span>{(<span class="pl-smi">googleMaps</span>, <span class="pl-smi">map</span>) <span class="pl-k">=&gt;</span> {
+        <span class="pl-smi">map</span>.<span class="pl-en">setMapTypeId</span>(<span class="pl-smi">googleMaps</span>.<span class="pl-smi">MapTypeId</span>.<span class="pl-c1">SATELLITE</span>)
+      }}
+    <span class="pl-k">/</span><span class="pl-k">&gt;</span>
+  <span class="pl-k">&lt;</span><span class="pl-k">/</span>div<span class="pl-k">&gt;</span>
+)
 
-  <span class="pl-en">render</span>() {
-    <span class="pl-k">const</span> { <span class="pl-c1">search</span> } <span class="pl-k">=</span> <span class="pl-v">this</span>.state
+<span class="pl-c1">Map</span>.<span class="pl-smi">propTypes</span> <span class="pl-k">=</span> {
+  googleMaps<span class="pl-k">:</span> <span class="pl-smi">PropTypes</span>.<span class="pl-c1">object</span>.<span class="pl-smi">isRequired</span>,
+}
 
-    <span class="pl-k">return</span> (
-      <span class="pl-k">&lt;</span>GooglePlacesSuggest onSelectSuggest<span class="pl-k">=</span>{ <span class="pl-v">this</span>.handleSelectSuggest } search<span class="pl-k">=</span>{ search }<span class="pl-k">&gt;</span>
-        <span class="pl-k">&lt;</span>input
-          type<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>text<span class="pl-pds">"</span></span>
-          value<span class="pl-k">=</span>{ search }
-          placeholder<span class="pl-k">=</span><span class="pl-s"><span class="pl-pds">"</span>Search a location<span class="pl-pds">"</span></span>
-          <span class="pl-c1">onChange</span><span class="pl-k">=</span>{ <span class="pl-v">this</span>.handleSearchChange }
-        <span class="pl-k">/&gt;</span>
-      <span class="pl-k">&lt;/</span>GooglePlacesSuggest<span class="pl-k">&gt;</span>
-    )
-  }
-}</pre></div>
-
-<h2>
-<a id="props" class="anchor" href="#props" aria-hidden="true"><span class="octicon octicon-link"></span></a>Props</h2>
-
-<ul>
-<li>
-<code>coordinates</code>: Array of objects with shape { description: String, latitude: Number, longitude: Number, title: String } - by default is []</li>
-<li>
-<code>defaultLat</code>: Number,</li>
-<li>
-<code>defaultLng</code>: Number,</li>
-<li>
-<code>googleMaps</code>: Object - injected by decorator,</li>
-<li>
-<code>onChange</code>: Function with two parameters (New coordinates object, actual zoom),</li>
-<li>
-<code>zoom</code>: Number - isRequired,</li>
-</ul>
-
-<h2>
-<a id="classes" class="anchor" href="#classes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Classes</h2>
-
-<ul>
-<li><code>.googleMap</code></li>
-</ul>
-
-<h2>
-<a id="development" class="anchor" href="#development" aria-hidden="true"><span class="octicon octicon-link"></span></a>Development</h2>
-
-<h3>
-<a id="clean-lib-folder" class="anchor" href="#clean-lib-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Clean <code>lib</code> folder</h3>
-
-<div class="highlight highlight-js"><pre>npm run clean</pre></div>
-
-<h3>
-<a id="build-lib-folder" class="anchor" href="#build-lib-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Build <code>lib</code> folder</h3>
-
-<div class="highlight highlight-js"><pre>npm run build</pre></div>
-
-<h3>
-<a id="watch-src-folder" class="anchor" href="#watch-src-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Watch <code>src</code> folder</h3>
-
-<div class="highlight highlight-js"><pre>npm run watch</pre></div>
-
-<h3>
-<a id="lint-src-folder" class="anchor" href="#lint-src-folder" aria-hidden="true"><span class="octicon octicon-link"></span></a>Lint <code>src</code> folder</h3>
-
-<div class="highlight highlight-js"><pre>npm run lint</pre></div>
-
-<h2>
-<a id="license" class="anchor" href="#license" aria-hidden="true"><span class="octicon octicon-link"></span></a>License</h2>
-
-<p>See <a href="./LICENCE">MIT</a></p>
-
+<span class="pl-k">export</span> <span class="pl-v">default</span> <span class="pl-smi">GoogleMapLoader</span>(<span class="pl-c1">Map</span>, {
+  libraries<span class="pl-k">:</span> [<span class="pl-s"><span class="pl-pds">"</span>places<span class="pl-pds">"</span></span>],
+  key<span class="pl-k">:</span> <span class="pl-c1">MY_API_KEY</span>,
+})
+</pre>
+      </div>
+      <h2>
+        <a id="props" class="anchor" href="#props" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Props
+      </h2>
+      <ul>
+        <li>
+          <code>autoFitBounds</code>: Boolean - Enable it if you will add and remove markers on the fly. Bounds will fit automatically
+        </li>
+        <li>
+          <code>boundsOffset</code>: Number - If <code>autoFitBounds</code> enabled you want custom bounds, - by default is 0.002
+        </li>
+        <li>
+          <code>coordinates</code>: Array of Marker props. You can use all props defined in <code>google.maps.MarkerOptions</code> object specification (<a href="https://developers.google.com/maps/documentation/javascript/reference#MarkerOptions">https://developers.google.com/maps/documentation/javascript/reference#MarkerOptions</a>). If you need some <code>google.maps</code> constants, use the <code>onLoaded</code> prop (<code>onLoaded: (googleMaps, map, marker) =&gt; {}</code>) to update your map and markers - by default is []
+        </li>
+        <li>
+          <code>googleMaps</code>: Object - injected by placesLoader,
+        </li>
+        <li>
+          <code>onLoaded</code>: Function with two parameters (<code>onLoaded: (googleMaps, map) =&gt; {}</code>),
+        </li>
+      </ul>
+      <p>You can use all props defined in <code>google.maps.MapOptions</code> object specification:
+        <a href="https://developers.google.com/maps/documentation/javascript/reference#MapOptions">https://developers.google.com/maps/documentation/javascript/reference#MapOptions</a>
+      </p>
+      <p>If you need some <code>google.maps</code> constants, use the <code>onLoaded</code> prop</p>
+      <h2>
+        <a id="development" class="anchor" href="#development" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Development
+      </h2>
+      <h3>
+        <a id="clean-lib-folder" class="anchor" href="#clean-lib-folder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Clean <code>lib</code> folder
+      </h3>
+      <div class="highlight highlight-source-js">
+        <pre>npm run clean</pre>
+      </div>
+      <h3>
+        <a id="build-lib-folder" class="anchor" href="#build-lib-folder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Build <code>lib</code> folder
+      </h3>
+      <div class="highlight highlight-source-js">
+        <pre>npm run build</pre>
+      </div>
+      <h3>
+        <a id="watch-src-folder" class="anchor" href="#watch-src-folder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Watch <code>src</code> folder
+      </h3>
+      <div class="highlight highlight-source-js">
+        <pre>npm run watch</pre>
+      </div>
+      <h3>
+        <a id="lint-src-folder" class="anchor" href="#lint-src-folder" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Lint <code>src</code> folder
+      </h3>
+      <div class="highlight highlight-source-js">
+        <pre>npm run lint</pre>
+      </div>
+      <h2>
+        <a id="license" class="anchor" href="#license" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>License
+      </h2>
+      <p>See <a href="./LICENCE">MIT</a></p>
       <footer class="site-footer">
-        <span class="site-footer-owner"><a href="https://github.com/cedricdelpoux/react-google-map">React-google-map</a> is maintained by <a href="https://github.com/cedricdelpoux">cedricdelpoux</a>.</span>
-
-        <span class="site-footer-credits">This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the <a href="https://github.com/jasonlong/cayman-theme">Cayman theme</a> by <a href="https://twitter.com/jasonlong">Jason Long</a>.</span>
+        <span class="site-footer-owner"><a href="https://github.com/xuopled/react-google-map">React-google-map</a> is maintained by <a href="https://github.com/xuopled">xuopled</a>.</span>
       </footer>
-
     </section>
-
-  <script type="text/javascript" src="build/bundle.js"></script>
+    <script type="text/javascript" src="build/bundle.js"></script>
   </body>
 </html>

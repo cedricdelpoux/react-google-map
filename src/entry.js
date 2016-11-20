@@ -1,4 +1,5 @@
-import React from 'react'
-import Demo from './demo'
+import * as React from "react"
+import * as ReactDOM from "react-dom"
+import Map from "./Map"
 
-React.render(<Demo />, document.getElementById('demo-container'))
+ReactDOM.render(<Map />, document.getElementById("demo-container"))
