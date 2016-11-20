@@ -1,7 +1,7 @@
 {
   "name": "react-google-map",
-  "version": "2.0.8",
-  "description": "React component to render a map with markers from Google Maps API",
+  "version": "3.0.0",
+  "description": "React component to render a Google Map with markers",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xuopled/react-google-map.git"

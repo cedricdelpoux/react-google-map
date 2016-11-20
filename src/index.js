@@ -17,28 +17,33 @@ class GoogleMap extends Component {
   }
 
   componentDidMount() {
-    const {googleMaps, centerLat, centerLng, mapType, ...props} = this.props
-
-    const mapTypes = [
-      "HYBRID": googleMaps.MapTypeId.HYBRID,
-      "ROADMAP": googleMaps.MapTypeId.ROADMAP,
-      "SATELLITE": googleMaps.MapTypeId.SATELLITE,
-      "TERRAIN": googleMaps.MapTypeId.TERRAIN,
-    ]
+    const {coordinates, googleMaps, onLoaded, ...props} = this.props
 
     const map = new googleMaps.Map(this.ref_map, {
-      center: new googleMaps.LatLng(centerLat, centerLng),
-      mapTypeId: mapTypes[mapType],
       ...props,
     })
 
-    this.setState({map}, () => this.initMarkers())
+    this.setState({map}, () => {
+      this.addNewMarkers(coordinates)
+    })
+
+    if (onLoaded) {
+      onLoaded(googleMaps, map)
+    }
   }
 
   componentWillReceiveProps(nextProps) {
     const newMarkers = nextProps.coordinates.some(coordinate => !this.state.markers.has(this.getMarkerId(coordinate)))
+    const oldMarkers = [...this.state.markers.keys()].some(markerId =>
+      !nextProps.coordinates.some(coordinate => markerId === this.getMarkerId(coordinate))
+    )
+
+    if (oldMarkers) {
+      this.removeOldMarkers(nextProps.coordinates)
+    }
+
     if (newMarkers) {
-      this.updateMarkers(nextProps.coordinates)
+      this.addNewMarkers(nextProps.coordinates)
     }
   }
 
@@ -46,23 +51,37 @@ class GoogleMap extends Component {
     return this.props.coordinates.length !== nextProps.coordinates.length
   }
 
-  initMarkers() {
-    const {autoFitBounds, coordinates} = this.props
+  getMarkerId(coordinate) {
+    return coordinate.position.lat + "_" + coordinate.position.lng
+  }
 
-    this.addNewMarkers(coordinates)
+  removeOldMarkers(coordinates) {
+    const {markers} = this.state
+    const {autoFitBounds} = this.props
+
+    markers.forEach((marker, markerId) => {
+      const isMarkerUsed = coordinates.some(coordinate =>
+        this.getMarkerId(coordinate) === markerId
+      )
+
+      if (!isMarkerUsed) {
+        marker.setMap(null)
+        markers.delete(markerId)
+      }
+    })
+
+    this.setState({markers})
+
     if (autoFitBounds) {
       this.fitBounds()
     }
   }
 
-  updateMarkers(coordinates) {
-    this.addNewMarkers(coordinates)
-  }
-
   addNewMarkers(coordinates) {
     const {markers} = this.state
+    const {autoFitBounds} = this.props
 
-    coordinates.forEach((coordinate, key) => {
+    coordinates.forEach(coordinate => {
       const markerId = this.getMarkerId(coordinate)
       if (!markers.has(markerId)) {
         markers.set(markerId, this.addMarker(markerId, coordinate))
@@ -70,53 +89,29 @@ class GoogleMap extends Component {
     })
 
     this.setState({markers})
-  }
 
-  getMarkerId(coordinate) {
-    return coordinate.latitude + "_" + coordinate.longitude
-  }
-
-  getNewCoordinates() {
-    return Array.from(this.state.markers.values()).map((marker) => {
-      const position = marker.getPosition()
-      return {
-        description: marker.description,
-        latitude: position.lat(),
-        longitude: position.lng(),
-        title: marker.getTitle(),
-      }
-    })
+    if (autoFitBounds) {
+      this.fitBounds()
+    }
   }
 
   addMarker(markerId, coordinate) {
     const {map} = this.state
     const {googleMaps} = this.props
+    const {
+      onLoaded, ...markerProps,
+    } = coordinate
 
     const marker = new googleMaps.Marker({
-      animation: googleMaps.Animation.DROP,
       map: map,
-      position: new googleMaps.LatLng(coordinate.latitude, coordinate.longitude),
-      title: coordinate.title,
-      description: coordinate.description,
-      ...coordinate.icon ? {icon: coordinate.icon} : {},
+      ...markerProps,
     })
 
-    return marker
-  }
-
-  removeMarker(markerId) {
-    const {map, markers} = this.state
-    const {onChange} = this.props
-    const marker = markers.get(markerId)
-
-    marker.setMap(null)
-    markers.delete(markerId)
-
-    if (onChange) {
-      onChange(this.getNewCoordinates(), map.getZoom())
+    if (onLoaded) {
+      onLoaded(googleMaps, map, marker)
     }
 
-    this.setState({markers})
+    return marker
   }
 
   fitBounds() {
@@ -139,9 +134,6 @@ class GoogleMap extends Component {
   }
 
   render() {
-    if (this.props.autoFitBounds) {
-      this.fitBounds()
-    }
     return (
       <div ref={ref => this.ref_map = ref} style={inlineStyles} />
     )
@@ -152,31 +144,17 @@ GoogleMap.propTypes = {
   autoFitBounds: PropTypes.bool,
   boundsOffset: PropTypes.number,
   coordinates: PropTypes.arrayOf(PropTypes.shape({
-    description: PropTypes.string,
-    icon: PropTypes.string,
-    latitude: PropTypes.number.isRequired,
-    longitude: PropTypes.number.isRequired,
-    title: PropTypes.string.isRequired,
-  })).isRequired,
+    onLoaded: PropTypes.func,
+  })),
   googleMaps: PropTypes.object.isRequired,
-  onChange: PropTypes.func,
-
-  // google maps props
-  centerLat: PropTypes.number,
-  centerLng: PropTypes.number,
-  mapType: PropTypes.oneOf(["HYBRID", "ROADMAP", "SATELLITE", "TERRAIN"]),
+  onLoaded: PropTypes.func,
 }
 
 GoogleMap.defaultProps = {
-  autoFitBounds: true,
+  autoFitBounds: false,
   boundsOffset: 0.002,
   coordinates: [],
-  onChange: null,
-
-  // google maps props
-  centerLat: 43.604363,
-  centerLng: 1.443363,
-  mapType: "ROADMAP",
+  onLoaded: null,
 }
 
 export default GoogleMap
