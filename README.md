@@ -13,6 +13,12 @@ https://developers.google.com/maps/documentation/javascript/reference
 npm install --save react-google-map
 ```
 
+__If you don't have a solution to load `googleMaps`, you could use this package:__
+
+```sh
+npm install --save react-google-maps-loader
+```
+
 ## Changelog
 
 See [changelog](./CHANGELOG.md)
