@@ -1,4 +1,5 @@
-import React, {Component, PropTypes} from "react"
+import PropTypes from "prop-types"
+import React from "react"
 
 const inlineStyles = {
   position: "relative",
@@ -7,7 +8,7 @@ const inlineStyles = {
   width: "100%",
 }
 
-class GoogleMap extends Component {
+class GoogleMap extends React.Component {
   constructor() {
     super()
     this.state = {
@@ -33,9 +34,14 @@ class GoogleMap extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    const newMarkers = nextProps.coordinates.some(coordinate => !this.state.markers.has(this.getMarkerId(coordinate)))
-    const oldMarkers = [...this.state.markers.keys()].some(markerId =>
-      !nextProps.coordinates.some(coordinate => markerId === this.getMarkerId(coordinate))
+    const newMarkers = nextProps.coordinates.some(
+      coordinate => !this.state.markers.has(this.getMarkerId(coordinate))
+    )
+    const oldMarkers = [...this.state.markers.keys()].some(
+      markerId =>
+        !nextProps.coordinates.some(
+          coordinate => markerId === this.getMarkerId(coordinate)
+        )
     )
 
     if (oldMarkers) {
@@ -60,8 +66,8 @@ class GoogleMap extends Component {
     const {autoFitBounds} = this.props
 
     markers.forEach((marker, markerId) => {
-      const isMarkerUsed = coordinates.some(coordinate =>
-        this.getMarkerId(coordinate) === markerId
+      const isMarkerUsed = coordinates.some(
+        coordinate => this.getMarkerId(coordinate) === markerId
       )
 
       if (!isMarkerUsed) {
@@ -98,9 +104,7 @@ class GoogleMap extends Component {
   addMarker(markerId, coordinate) {
     const {map} = this.state
     const {googleMaps} = this.props
-    const {
-      onLoaded, ...markerProps,
-    } = coordinate
+    const {onLoaded, ...markerProps} = coordinate
 
     const marker = new googleMaps.Marker({
       map: map,
@@ -122,30 +126,43 @@ class GoogleMap extends Component {
       return
     }
 
-    const bounds = Array.from(markers.values()).reduce((bound, marker) => bound.extend(marker.getPosition()), new googleMaps.LatLngBounds())
+    const bounds = Array.from(markers.values()).reduce(
+      (bound, marker) => bound.extend(marker.getPosition()),
+      new googleMaps.LatLngBounds()
+    )
     const center = bounds.getCenter()
 
     bounds
-      .extend(new googleMaps.LatLng(center.lat() + boundsOffset, center.lng() + boundsOffset))
-      .extend(new googleMaps.LatLng(center.lat() - boundsOffset, center.lng() - boundsOffset))
+      .extend(
+        new googleMaps.LatLng(
+          center.lat() + boundsOffset,
+          center.lng() + boundsOffset
+        )
+      )
+      .extend(
+        new googleMaps.LatLng(
+          center.lat() - boundsOffset,
+          center.lng() - boundsOffset
+        )
+      )
 
     map.setCenter(center)
     map.fitBounds(bounds)
   }
 
   render() {
-    return (
-      <div ref={ref => this.ref_map = ref} style={inlineStyles} />
-    )
+    return <div ref={ref => (this.ref_map = ref)} style={inlineStyles} />
   }
 }
 
 GoogleMap.propTypes = {
   autoFitBounds: PropTypes.bool,
   boundsOffset: PropTypes.number,
-  coordinates: PropTypes.arrayOf(PropTypes.shape({
-    onLoaded: PropTypes.func,
-  })),
+  coordinates: PropTypes.arrayOf(
+    PropTypes.shape({
+      onLoaded: PropTypes.func,
+    })
+  ),
   googleMaps: PropTypes.object.isRequired,
   onLoaded: PropTypes.func,
 }

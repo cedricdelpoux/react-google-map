@@ -1,3 +1,6 @@
+# 3.1.0 - 2017-09-28
+* Update : dependencies
+
 # 3.0.1 - 2016-11-20
 * Remove : useless `react-google-maps-loader` dependency in package.json
 

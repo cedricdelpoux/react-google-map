@@ -1,19 +1,12 @@
 {
   "name": "react-google-map",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "React component to render a Google Map with markers",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/xuopled/react-google-map.git"
   },
-  "keywords": [
-    "react",
-    "google",
-    "maps",
-    "map",
-    "markers",
-    "googlemaps"
-  ],
+  "keywords": ["react", "google", "maps", "map", "markers", "googlemaps"],
   "author": "Cédric Delpoux <xuopled@gmail.com>",
   "license": "MIT",
   "bugs": {
@@ -21,24 +14,25 @@
   },
   "homepage": "https://github.com/xuopled/react-google-map#readme",
   "main": "lib/index.js",
-  "files": [
-    "lib"
-  ],
+  "files": ["lib"],
   "peerDependencies": {
-    "react": "~15.4.0"
+    "react": "^15.4.0"
   },
   "devDependencies": {
-    "babel-core": "~6.14.0",
-    "babel-eslint": "~6.1.0",
-    "babel-loader": "~6.2.4",
-    "babel-plugin-transform-object-rest-spread": "~6.19.0",
-    "babel-preset-latest": "~6.14.0",
+    "babel-core": "^6.14.0",
+    "babel-eslint": "^6.1.0",
+    "babel-loader": "^6.2.4",
+    "babel-plugin-transform-object-rest-spread": "^6.19.0",
+    "babel-preset-latest": "^6.14.0",
     "babel-preset-react": "^6.16.0",
-    "eslint": "~3.5.0",
-    "eslint-loader": "~1.5.0",
-    "eslint-plugin-react": "~6.2.0",
-    "node-libs-browser": "~0.5.2",
-    "webpack": "~1.13.1"
+    "eslint": "^3.5.0",
+    "eslint-loader": "^1.5.0",
+    "eslint-plugin-react": "^6.2.0",
+    "node-libs-browser": "^0.5.2",
+    "webpack": "^1.13.1"
+  },
+  "dependencies": {
+    "prop-types": "^15.6.0"
   },
   "scripts": {
     "clean": "rm -rf lib",
