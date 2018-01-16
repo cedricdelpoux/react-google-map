@@ -1,15 +1,23 @@
+# 3.1.1 - 2018-01-16
+
+* Fixed : shouldComponentUpdate method
+
 # 3.1.0 - 2017-09-28
+
 * Update : dependencies
 
 # 3.0.1 - 2016-11-20
+
 * Remove : useless `react-google-maps-loader` dependency in package.json
 
 # 3.0.0 - 2016-11-20
+
 * Add : `onLoaded` prop on `map`
 * Add : `onLoaded` prop on `marker`
 * Update : custom props -> google maps native props
 
 # 2.0.0 - 2016-11-18
+
 * Update : package.json
 * Update : .babelrc
 * Update : .editorconfig
