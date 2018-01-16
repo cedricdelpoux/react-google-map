@@ -54,7 +54,7 @@ class GoogleMap extends React.Component {
   }
 
   shouldComponentUpdate(nextProps, nextState) {
-    return this.props.coordinates.length !== nextProps.coordinates.length
+    return JSON.stringify(this.props.coordinates) !== JSON.stringify(nextProps.coordinates)
   }
 
   getMarkerId(coordinate) {
