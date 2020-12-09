@@ -25,7 +25,7 @@ See [changelog](./CHANGELOG.md)
 
 ## Demo
 
-<http://xuopled.github.io/react-google-map/>
+<http://cedricdelpoux.github.io/react-google-map/>
 
 ## Usage
 ```css
