@@ -4,15 +4,15 @@
   "description": "React component to render a Google Map with markers",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/xuopled/react-google-map.git"
+    "url": "git+https://github.com/cedricdelpoux/react-google-map.git"
   },
   "keywords": ["react", "google", "maps", "map", "markers", "googlemaps"],
-  "author": "Cédric Delpoux <xuopled@gmail.com>",
+  "author": "Cédric Delpoux <cedric.delpoux@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/xuopled/react-google-map/issues"
+    "url": "https://github.com/cedricdelpoux/react-google-map/issues"
   },
-  "homepage": "https://github.com/xuopled/react-google-map#readme",
+  "homepage": "https://github.com/cedricdelpoux/react-google-map#readme",
   "main": "lib/index.js",
   "files": ["lib"],
   "peerDependencies": {
